@@ -109,7 +109,7 @@
         if (kindID === 0) {
             links = [
                 'https://www.baidu.com/s?wd=',
-                'https://cn.bing.com/search?q=',
+                'https://www.bing.com/search?pc=MOZI&form=MOZLBR&q=',
                 'https://www.so.com/s?q=',
                 'http://h2y.github.io/allso/#',
                 'https://www.zhihu.com/search?q=',
