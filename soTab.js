@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name                soTab - Search Engine Switcher (Fixed)
-// @name:zh-CN          搜索引擎一键切换 soTab 修复版
+// @name:zh-CN          搜索引擎一键切换
 // @description         在常用的搜索引擎页面中添加互相切换的按钮。修复百度、必应失效问题。
 // @author              Moshel / Gemini Update
 // @namespace           http://hzy.pw
@@ -21,8 +21,8 @@
 (function () {
     'use strict';
 
-    const sites = ['baidu', 'bing', 'so.com', '', 'zhihu', 'google', 'soku', 'sogou'];
-    const sitesName = ['百度', '必应', '好搜', 'ALLSO', '知乎', '谷歌', '搜库', '搜狗'];
+    const sites = ['baidu', 'bing', 'so.com', 'metaso.cn', 'zhihu', 'google', 'soku', 'sogou'];
+    const sitesName = ['百度', '必应', '好搜', '秘塔', '知乎', '谷歌', '搜库', '搜狗'];
 
     const styleText = `
         .soTab {
@@ -111,7 +111,7 @@
                 'https://www.baidu.com/s?wd=',
                 'https://www.bing.com/search?pc=MOZI&form=MOZLBR&q=',
                 'https://www.so.com/s?q=',
-                'http://h2y.github.io/allso/#',
+                'https://metaso.cn/?q=',
                 'https://www.zhihu.com/search?q=',
                 'https://www.google.com/search?q=',
                 '',
@@ -132,7 +132,7 @@
         // 关键点：针对 Bing，class 必须包含 b_ 开头，防止被其脚本自动清除
         panel.className = `b_soTab soTab site_${siteID}`;
 
-        let html = `<span class='soTab_title'>soTab 切换引擎：</span>`;
+        let html = `<span class='soTab_title'>切换引擎：</span>`;
         links.forEach((link, idx) => {
             if (link && idx !== siteID) {
                 html += `<a href="${link}${kw}" target="_blank">${sitesName[idx]}</a>`;
@@ -140,11 +140,11 @@
         });
 
         panel.innerHTML = html;
-        
+
         // 注入到 body，并设置 data-for 防止百度清除
         const style = GM_addStyle(styleText);
         if (style) style.dataset.for = "result";
-        
+
         document.body.appendChild(panel);
     }
 
@@ -153,7 +153,7 @@
     function run() {
         const currentKw = getKeywords();
         const panel = document.getElementById('soTab');
-        
+
         if (!panel || currentKw !== lastKeyword) {
             if (panel) panel.remove();
             lastKeyword = currentKw;
@@ -163,7 +163,7 @@
 
     // 初始化
     setTimeout(run, 1000);
-    
+
     // 每 2 秒检查一次页面状态（应对异步加载）
     setInterval(run, 2000);
 
